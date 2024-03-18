@@ -1,0 +1,19 @@
+version: '3.8'
+
+services:
+  api:
+    image: rodcordeiro/api:latest
+    container_name: rod_api
+    depends_on:
+      - api_db
+    restart: always
+    ports:
+      - '3340:80'
+    env_file:
+      - .env
+    networks:
+      - rod
+
+networks:
+  rod:
+    driver: bridge
