@@ -25,6 +25,7 @@ export class WebhooksController {
   ) {
     return await this._webhooksServices.parse({ origin, webhook });
   }
+  
   @Post('/:origin/:webhook')
   @HttpCode(HttpStatus.OK)
   async parse_post(
