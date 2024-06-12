@@ -37,7 +37,7 @@ export class WebhooksController {
   }
 
   @Get('/alexa')
-  async index(
+  async alexa(
      @Body() body: Record<string,unknown>,
   ) {
     console.log(body)
