@@ -25,7 +25,6 @@ export class WebhooksController {
   ) {
     return await this._webhooksServices.parse({ origin, webhook });
   }
-  
   @Post('/:origin/:webhook')
   @HttpCode(HttpStatus.OK)
   async parse_post(
@@ -37,19 +36,17 @@ export class WebhooksController {
   }
 
   @Get('/alexa')
-  async alexa(
-     @Body() body: Record<string,unknown>,
-  ) {
-    console.log(body)
+  async alexa(@Body() body: Record<string, unknown>) {
+    console.log(body);
     return {
-        version: "1.0",
-        response: {
-            outputSpeech: {
-                type: "PlainText",
-                text: 'As aulas de hoje são: não sei',
-            },
-            shouldEndSession: true,
+      version: '1.0',
+      response: {
+        outputSpeech: {
+          type: 'PlainText',
+          text: 'As aulas de hoje são: não sei',
         },
+        shouldEndSession: true,
+      },
     };
   }
 }

@@ -39,6 +39,8 @@ export class JwtWsGuard implements CanActivate {
         decode.payload as string,
         process.env.ENC_SECRET,
       );
+      console.log(data);
+
       //   context.switchToHttp().getRequest().user = decode;
       return true;
     } catch (error) {

@@ -15,6 +15,14 @@ export const envSchema = z.object({
   DB_USER: z.string(),
   DB_PWD: z.string(),
   DB_NAME: z.string(),
+
+  DISCORD_WEBHOOK: z.string(),
+
+  NEW_RELIC_LICENSE_KEY: z.string(),
+  NEW_RELIC_APP_NAME: z.string(),
+
+  RABBIT_URL: z.string(),
+  RABBIT_QUEUE: z.string(),
 });
 
 export type EnvType = z.infer<typeof envSchema>;
