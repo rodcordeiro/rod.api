@@ -19,6 +19,14 @@ declare global {
       readonly DB_PWD: string;
       /** Database name */
       readonly DB_NAME: string;
+
+      readonly DISCORD_WEBHOOK: string;
+
+      readonly NEW_RELIC_LICENSE_KEY: string;
+      readonly NEW_RELIC_APP_NAME: string;
+
+      readonly RABBIT_URL: string;
+      readonly RABBIT_QUEUE: string;
     }
   }
 }

@@ -4,10 +4,10 @@ WORKDIR /rod
 
 COPY . .
 
-RUN yarn
+RUN npm install
 
-RUN yarn build
+RUN npm run build
 
 EXPOSE 80
 
-CMD [ "yarn", "start:prod" ]
+CMD [ "npm", "run start:prod" ]

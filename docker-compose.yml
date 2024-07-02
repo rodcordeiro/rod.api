@@ -6,7 +6,7 @@ services:
     container_name: rod_api
     restart: always
     ports:
-      - '3340:80'
+      - '3333:80'
     env_file:
       - .env
     networks:

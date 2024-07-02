@@ -1,9 +1,12 @@
 import { Injectable, Logger } from '@nestjs/common';
 import { HttpService } from '@nestjs/axios';
+import axios from 'axios';
 import { map } from 'rxjs';
+import { ENV_VARIABLES } from '@/common/config/env.config';
 
 @Injectable()
 export class WebhooksServices {
+  private readonly logger = new Logger(WebhooksServices.name);
   constructor(private readonly _httpService: HttpService) {}
 
   async parse(data: {
@@ -11,18 +14,19 @@ export class WebhooksServices {
     webhook: string;
     body?: Record<string, any>;
   }) {
+    this.logger.debug(
+      `Received webhook from ${data.origin} in ${data.webhook}`,
+    );
     if (data.origin === 'docker') return await this.docker(data);
+    const payload = {
+      content: data.body ? data.body : JSON.stringify(data),
+      username: 'Lord Etl',
+      avatar_url: 'https://rodcordeiro.github.io/shares/img/vader.png',
+    };
 
-    await this._httpService
-      .post(
-        'https://discord.com/api/webhooks/1096546893179396096/Dtg3rf_vr-roPMGHKWU2KVZF0WszWx__UKPqbrZWZk7VG1ukU8LREvcRyXgIOK2iw7Kn',
-        {
-          content: JSON.stringify(data),
-          username: 'Lord Etl',
-          avatar_url: 'https://rodcordeiro.github.io/shares/img/vader.png',
-        },
-      )
-      .pipe(map(response => response.data));
+    // try {
+    await axios.post(ENV_VARIABLES.DISCORD_WEBHOOK, payload);
+
     return { state: 'success' };
   }
 
@@ -33,14 +37,11 @@ export class WebhooksServices {
   }) {
     Logger.log('[Docker] webhook: ' + JSON.stringify(data));
     await this._httpService
-      .post(
-        'https://discord.com/api/webhooks/1096546893179396096/Dtg3rf_vr-roPMGHKWU2KVZF0WszWx__UKPqbrZWZk7VG1ukU8LREvcRyXgIOK2iw7Kn',
-        {
-          content: JSON.stringify(data.body),
-          username: 'Lord Etl',
-          avatar_url: 'https://rodcordeiro.github.io/shares/img/vader.png',
-        },
-      )
+      .post(ENV_VARIABLES.DISCORD_WEBHOOK, {
+        content: JSON.stringify(data.body),
+        username: 'Lord Etl',
+        avatar_url: 'https://rodcordeiro.github.io/shares/img/vader.png',
+      })
       .pipe(map(response => response.data));
     return { state: 'success' };
   }
